@@ -65,16 +65,24 @@ pip install -r requirements.inference.txt
 1. Start backend + website:
 
 ```powershell
-cd C:\Users\YashasVM\Downloads\code\LLM
+cd C:\Users\{your-username}\Downloads\code\LLM
 .\.venv\Scripts\Activate.ps1
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-2. Open website:
+2. Start Cloudflare tunnel in a second terminal (required for Colab access):
+
+```powershell
+cd C:\Users\{your-username}\Downloads\code\LLM
+.\.venv\Scripts\Activate.ps1
+cloudflared tunnel --url http://127.0.0.1:8000
+```
+
+3. Open website:
 
 - `http://127.0.0.1:8000`
 
-3. In UI:
+4. In UI:
 
 - Step 1: upload Instagram `.json`
 - Step 2: build bundle and copy `bun_...`
@@ -90,24 +98,18 @@ Steps:
 1. Open notebook in Colab.
 2. Set runtime GPU to **T4**.
 3. Set:
-   - `BASE_URL` = public URL of your local API
+   - `BASE_URL` = Cloudflare URL from local tunnel (`https://...trycloudflare.com`)
    - `BUNDLE_ID` = your `bun_...`
 4. Run all cells.
 5. Download `adapter.zip`.
 
-If you need a public URL:
-
-```powershell
-cloudflared tunnel --url http://127.0.0.1:8000
-```
-
 Register adapter in UI Step 4:
 
-- Adapter URI: `local://C:/Users/YashasVM/Downloads/code/LLM/data/models/adapter.zip`
+- Adapter URI: `local://C:/Users/{your-username}/Downloads/code/LLM/data/models/adapter.zip`
 - Validation Loss: numeric value
 - Style Score: numeric value
 
-## Exact Commands (Run + Upload)
+## Exact Commands (Run)
 
 Run API:
 
@@ -127,21 +129,6 @@ Run tests:
 pytest -q
 ```
 
-Upload only required project files to GitHub:
-
-```powershell
-cd C:\Users\YashasVM\Downloads\code\LLM
-git status
-git add .gitignore README.md app colab scripts tests requirements.txt requirements.inference.txt
-git status
-git commit -m "Update README structure and deployment guide"
-git push -u origin main
-```
-
-GitHub repo:
-
-- `https://github.com/YashasVM/RawArchive.git`
-
 ## Privacy Check (Exclude adapter + messages)
 
 Ignored by git:
@@ -159,4 +146,4 @@ git ls-files | Select-String -Pattern "adapter\.zip|attachment\.zip|messages?\.j
 
 Expected result: no output.
 
-Made by @Yashas.VM
+<p align="center">Made by @Yashas.VM</p>

@@ -254,4 +254,4 @@ Expected result: no output.
 - Keep local API running while Colab downloads bundle/train script.
 - If model registration fails, verify adapter path and URI prefix `local://`.
 
-<p align="center">Made by @Yashas.VM</p>
+<p align="center">Made by @Yashas.VM & Codex,Claude</p>

@@ -2,7 +2,9 @@
 
 ## Intro (What This Actually Does)
 
-RawArchive takes Instagram chat export `.json` files, cleans/parses them, builds a training bundle (`bun_...`), trains a LoRA adapter in Colab, and lets you register and chat with the model (`mdl_...`) locally.
+RawArchive is an end-to-end app that you can run on your PC and connect to Google Colab for training. It ingests your Instagram chat export `.json` files, preprocesses the conversations into supervised training pairs, and fine-tunes `Qwen/Qwen2.5-3B-Instruct` using a LoRA adapter.
+
+After training, the adapter is registered in the app so you can chat with a model that responds in the learned style of the message history. In short: local app for data + control, Colab for GPU training, and a personalized response model for inference.
 
 Current supported source: Instagram export JSON.
 

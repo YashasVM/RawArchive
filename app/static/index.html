@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PulseForge - Instagram Style Trainer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="bg-layer"></div>
+    <main class="shell">
+      <header class="hero reveal-1">
+        <p class="eyebrow">Colab-first LoRA Trainer</p>
+        <h1>PulseForge</h1>
+        <p class="subtitle">Turn Instagram chat history into a personalized reply model using Qwen2.5-3B + LoRA.</p>
+      </header>
+
+      <section class="panel reveal-2">
+        <h2>1. Upload Instagram JSON</h2>
+        <form id="upload-form" class="form-grid">
+          <label class="field">
+            <span>Chat Export File(s)</span>
+            <input type="file" id="chat-file" accept=".json" multiple required />
+          </label>
+          <button type="submit" class="btn btn-primary">Upload + Parse</button>
+        </form>
+        <div id="upload-result" class="result hidden"></div>
+      </section>
+
+      <section class="panel reveal-3">
+        <h2>2. Build Training Bundle</h2>
+        <form id="build-form" class="form-grid">
+          <label class="field">
+            <span>Target User ID</span>
+            <select id="target-user" required>
+              <option value="">Upload data first</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Context Turns</span>
+            <input type="number" id="context-turns" value="8" min="1" max="30" required />
+          </label>
+          <label class="field">
+            <span>Min Reply Chars</span>
+            <input type="number" id="min-reply-chars" value="2" min="1" max="200" required />
+          </label>
+          <label class="field">
+            <span>Max Samples</span>
+            <input type="number" id="max-samples" value="20000" min="100" max="100000" required />
+          </label>
+          <button type="submit" class="btn btn-primary">Build Bundle</button>
+        </form>
+        <div id="build-result" class="result hidden"></div>
+      </section>
+
+      <section class="panel reveal-4">
+        <h2>3. Colab Launch Config</h2>
+        <div id="colab-result" class="result">
+          Build a bundle to get a signed `BUNDLE_URL` and notebook launch config.
+        </div>
+      </section>
+
+      <section class="panel reveal-5">
+        <h2>4. Register Trained Adapter</h2>
+        <form id="register-form" class="form-grid">
+          <label class="field">
+            <span>Adapter URI</span>
+            <input type="text" id="adapter-uri" placeholder="gs://... or hf://..." required />
+          </label>
+          <label class="field">
+            <span>Validation Loss</span>
+            <input type="number" id="val-loss" value="1.6" step="0.01" required />
+          </label>
+          <label class="field">
+            <span>Style Score</span>
+            <input type="number" id="style-score" value="0.8" step="0.01" required />
+          </label>
+          <button type="submit" class="btn">Register Model</button>
+        </form>
+        <div id="register-result" class="result hidden"></div>
+      </section>
+    </main>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

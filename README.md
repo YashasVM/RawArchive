@@ -1,108 +1,118 @@
 # RawArchive
 
-RawArchive is a Colab-first platform to turn Instagram chat exports into a personalized reply model.
+Turn Instagram chat exports into a personalized reply model with FastAPI + Colab LoRA training.
 
 Made by [@yashas.vm](https://github.com/YashasVM)
 
-## What This Project Does
+## 1. What This Project Does
 
-1. Upload one or more Instagram `.json` export files.
-2. Parse and normalize message data.
-3. Build a training bundle (`bun_...`) with train/validation samples.
-4. Fine-tune a LoRA adapter on `Qwen/Qwen2.5-3B-Instruct` in Google Colab.
+1. Upload one or more Instagram export `.json` files.
+2. Parse and normalize chat data.
+3. Build a training bundle (`bun_...`).
+4. Train a LoRA adapter in Colab.
 5. Download `adapter.zip`.
-6. Register the adapter in the app (`mdl_...`).
-7. Use local or Colab inference chat with the trained style.
+6. Register the adapter as a model (`mdl_...`).
+7. Chat locally or in Colab using that style.
 
-## Project Structure
+## 2. Project Structure
 
-- `app/` FastAPI backend + frontend UI.
-- `colab/` notebooks and training script.
-- `scripts/` local inference scripts.
-- `tests/` parser/builder/API tests.
-- `data/` runtime artifacts (ignored in git).
+- `app/`: FastAPI backend + local web UI.
+- `colab/`: Colab notebooks and training script.
+- `scripts/`: local inference chat script.
+- `tests/`: API/parser/builder tests.
+- `data/`: runtime artifacts (ignored by git).
 
-## Prerequisites
+## 3. Prerequisites
 
-- Python 3.11+
+- Windows + PowerShell
+- Python `3.11+`
 - Git
 - Google Colab account
-- (Optional) Cloudflare/ngrok tunnel for Colab access to local backend
+- (Optional) Cloudflare tunnel for Colab to access your local API
 
-## Step-By-Step: Run Locally
+## 4. Local Setup (Step by Step)
 
-1. Create and activate virtual env:
+1. Open terminal in repo root:
 
 ```powershell
 cd C:\Users\YashasVM\Downloads\code\LLM
+```
+
+2. Create and activate virtual environment:
+
+```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-2. Install dependencies:
+3. Install dependencies:
 
 ```powershell
 pip install -r requirements.txt
 ```
 
-3. Start API + web app:
+4. Start the API + website:
 
 ```powershell
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-4. Open web app:
+5. Open:
 
 - `http://127.0.0.1:8000`
 
-## Step-By-Step: Build a Training Bundle (`bun_...`)
+## 5. Build Bundle (`bun_...`) From Website
 
-1. In Step 1 UI, upload one or many Instagram `.json` files.
-2. Wait for parse stats.
-3. In Step 2, select target user and click **Build Bundle**.
-4. Copy the generated `bundle_id` (`bun_...`).
+1. In Step 1 UI, upload Instagram `.json` files.
+2. Wait until parse stats appear.
+3. In Step 2, select the target user.
+4. Click **Build Bundle**.
+5. Copy and save the returned `bundle_id` (starts with `bun_`).
 
-## Step-By-Step: Train on Colab (Fastest)
+Made by [@yashas.vm](https://github.com/YashasVM)
 
-Use notebook: `colab/train_lora_ultrafast.ipynb`
+## 6. Train Adapter in Colab
 
-1. Upload/open the notebook in Colab.
-2. Select **Runtime -> Change runtime type -> T4 GPU**.
-3. Enter:
-   - `BASE_URL` (your public tunnel URL)
-   - `BUNDLE_ID` (your `bun_...`)
-4. Run cells in order.
-5. Download `adapter.zip` when training completes.
+Recommended notebook:
 
-### If You Need a Tunnel
+- `colab/train_lora_ultrafast.ipynb`
 
-Run in local terminal (second tab):
+Steps:
+
+1. Open/upload notebook in Google Colab.
+2. Set runtime to **T4 GPU**.
+3. Fill:
+   - `BASE_URL` = your public API URL
+   - `BUNDLE_ID` = your `bun_...` id
+4. Run all cells in order.
+5. Download generated `adapter.zip`.
+
+If you need a tunnel:
 
 ```powershell
 cloudflared tunnel --url http://127.0.0.1:8000
 ```
 
-Use the provided `https://...trycloudflare.com` as `BASE_URL` in Colab.
+Use the generated `https://...trycloudflare.com` as `BASE_URL`.
 
-## Step-By-Step: Register Trained Model (`mdl_...`)
+## 7. Register Adapter (`mdl_...`) in Website
 
-1. Move downloaded `adapter.zip` to:
+1. Put downloaded adapter at:
 
 `C:/Users/YashasVM/Downloads/code/LLM/data/models/adapter.zip`
 
-2. In web app Step 4, fill:
-- Adapter URI: `local://C:/Users/YashasVM/Downloads/code/LLM/data/models/adapter.zip`
-- Validation Loss: numeric only (example: `3.83`)
-- Style Score: numeric only (example: `0.80`)
-
+2. In website Step 4, enter:
+   - Adapter URI: `local://C:/Users/YashasVM/Downloads/code/LLM/data/models/adapter.zip`
+   - Validation Loss: numeric (example `3.83`)
+   - Style Score: numeric (example `0.80`)
 3. Click **Register Model**.
-4. Save returned `model_id` (`mdl_...`).
+4. Save the returned `model_id` (`mdl_...`).
 
-## Step-By-Step: Chat With The Trained Adapter
+## 8. Chat With Your Model
 
-### Option A: Local Chat (Windows)
+### Option A: Local Chat
 
-1. Install inference deps:
+1. Install inference dependencies:
 
 ```powershell
 pip install -r requirements.inference.txt
@@ -115,19 +125,23 @@ python scripts\chat_local.py --model-id mdl_bb8e7abb4c
 ```
 
 3. Commands:
-- `/reset` clear history
-- `/exit` quit
+   - `/reset` clears history
+   - `/exit` quits
 
 ### Option B: Colab Chat
 
-Use notebook: `colab/chat_adapter_easy.ipynb`
+Notebook:
 
-1. Open in Colab.
+- `colab/chat_adapter_easy.ipynb`
+
+Steps:
+
+1. Open notebook in Colab.
 2. Upload `adapter.zip`.
 3. Run all cells.
-4. Chat in last cell.
+4. Chat in the last cell.
 
-## API Endpoints
+## 9. API Endpoints
 
 - `POST /v1/datasets/instagram/upload`
 - `POST /v1/datasets/{dataset_id}/build`
@@ -136,27 +150,50 @@ Use notebook: `colab/chat_adapter_easy.ipynb`
 - `GET /v1/bundles/{bundle_id}/download?token=...`
 - `POST /v1/models/register`
 
-## Git + Privacy Notes
+## 10. Privacy and Git Safety
 
-This repo is configured to exclude private artifacts:
+The repo ignores private files by default:
 
-- `data/datasets/` (raw/processed message content)
+- `data/datasets/` (raw message data)
 - `data/bundles/` (training bundles)
-- `data/models/` (adapter files like `adapter.zip`)
-- `.venv/`, caches, pyc files
+- `data/models/` (model zips like `adapter.zip`)
+- `.venv/`, caches, `*.pyc`
+- local-only folders: `.claude/`, `RawArchive/`
+- explicit sensitive names: `adapter.zip`, `attachment.zip`, `messages*.json`
 
-`.gitignore` ensures message exports and trained artifacts are not committed.
+This keeps message exports and adapters out of GitHub commits.
 
-## Test
+## 11. Upload to GitHub (Only Main Files)
+
+Run these commands from repo root:
+
+```powershell
+cd C:\Users\YashasVM\Downloads\code\LLM
+git status
+git add .gitignore README.md app colab scripts tests requirements.txt requirements.inference.txt
+git status
+git commit -m "Clean README and tighten privacy ignore rules"
+git push -u origin main
+```
+
+After pushing, confirm no private files are tracked:
+
+```powershell
+git ls-files | Select-String -Pattern "adapter\.zip|attachment\.zip|messages?|conversation"
+```
+
+The expected output is empty.
+
+## 12. Run Tests
 
 ```powershell
 pytest -q
 ```
 
-## Environment Variables
+## 13. Environment Variables
 
-- `PUBLIC_BASE_URL` use public tunnel URL for Colab-reachable links
-- `NOTEBOOK_URL` override notebook URL returned by launch endpoint
-- `APP_SECRET` HMAC token secret
-- `STORE_RAW_UPLOADS` set `true` only if you intentionally want raw payload snapshots
-- `MAX_UPLOAD_MB` per-file upload cap
+- `PUBLIC_BASE_URL`: public URL for Colab callbacks/download links
+- `NOTEBOOK_URL`: custom notebook URL returned by launch endpoint
+- `APP_SECRET`: HMAC token secret
+- `STORE_RAW_UPLOADS`: set `true` only if you intentionally want raw payload snapshots
+- `MAX_UPLOAD_MB`: upload size limit per file

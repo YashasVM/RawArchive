@@ -5,3 +5,14 @@ __pycache__/
 data/datasets/
 data/bundles/
 data/models/
+.claude/
+RawArchive/
+
+# Explicitly ignore private exports/artifacts
+adapter.zip
+attachment.zip
+attachments.zip
+messages/
+**/messages.json
+**/*_messages*.json
+**/conversation*.json

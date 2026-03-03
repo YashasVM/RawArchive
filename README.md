@@ -2,6 +2,12 @@
 
 Train a personalized reply model from your Instagram chats using a local app + Colab GPU fine-tuning on `Qwen/Qwen2.5-3B-Instruct`.
 
+## Website Preview
+
+<p align="center">
+  <img src="docs/images/rawarchive-ui.png" alt="RawArchive web UI" width="100%" />
+</p>
+
 ## What This App Does
 
 RawArchive is a full workflow for style-learning from message history:

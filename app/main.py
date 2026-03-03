@@ -31,7 +31,7 @@ from app.parser import parse_instagram_export
 from app.storage import LocalStore
 from app.token_utils import create_download_token, verify_download_token
 
-app = FastAPI(title="Instagram Chat Style Trainer", version="0.1.0")
+app = FastAPI(title="RawArchive", version="0.1.0")
 store = LocalStore()
 
 app.add_middleware(

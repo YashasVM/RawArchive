@@ -126,7 +126,6 @@ Project files used:
 ### 1) Local Setup
 
 ```powershell
-cd C:\Users\{your-username}\Downloads\code\LLM
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -135,7 +134,6 @@ pip install -r requirements.txt
 ### 2) Start API
 
 ```powershell
-cd C:\Users\{your-username}\Downloads\code\LLM
 .\.venv\Scripts\Activate.ps1
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
@@ -143,7 +141,6 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ### 3) Start Cloudflare Tunnel (Second Terminal)
 
 ```powershell
-cd C:\Users\{your-username}\Downloads\code\LLM
 .\.venv\Scripts\Activate.ps1
 cloudflared tunnel --url http://127.0.0.1:8000
 ```
@@ -171,14 +168,13 @@ Run all cells, then download `adapter.zip`.
 
 In RawArchive UI Step 4:
 
-- Adapter URI: `local://C:/Users/{your-username}/Downloads/code/LLM/data/models/adapter.zip`
+- Adapter URI: `local://C:/Users/{your-username}/{your-location}/data/models/adapter.zip`
 - Validation Loss: numeric value
 - Style Score: numeric value
 
 ### 7) Chat Locally
 
 ```powershell
-cd C:\Users\{your-username}\Downloads\code\LLM
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.inference.txt
 python scripts\chat_local.py --model-id mdl_your_model_id

@@ -228,4 +228,6 @@ Expected result: no output.
 - Keep local API + tunnel running during Colab download/training steps.
 - If registration fails, verify file path and `local://` prefix.
 
-<p align="center">Made by @Yashas.VM & Codex,Claude</p>
+
+### <p align="center">Made by @Yashas.VM & Codex,Claude</p>
+

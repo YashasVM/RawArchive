@@ -9,7 +9,7 @@ Current supported source: Instagram export JSON.
 Architecture-style diagram:
 
 ```text
-Instagram Export JSON (Current) / WhatsApp / Telegram / Slack / Discord / Google Chat / Signal / iMessage / BlueBubbles / IRC / Microsoft Teams / Matrix / Feishu / LINE / Mattermost / Nextcloud Talk / Nostr / Synology Chat / Tlon / Twitch / Zalo / Zalo Personal / WebChat
+    Instagram Export JSON (Current) 
                |
                v
 +-------------------------------+
@@ -31,7 +31,6 @@ System:
 
 - Windows + PowerShell
 - Python `3.11+`
-- Git
 - Google Colab account
 - Optional: `cloudflared` tunnel for Colab -> local API access
 
@@ -47,7 +46,7 @@ Project files required:
 Install dependencies:
 
 ```powershell
-cd C:\Users\YashasVM\Downloads\code\LLM
+cd C:\Users\{your-username}\Downloads\code\LLM
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt

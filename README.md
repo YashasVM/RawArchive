@@ -230,6 +230,25 @@ Expected result: no output.
 - Keep local API + tunnel running during Colab download/training steps.
 - If registration fails, verify file path and `local://` prefix.
 
+---
+
+## Contributors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/YashasVM">
+        <img src="https://github.com/YashasVM.png" width="100px;" alt="Yashas VM"/>
+        <br />
+        <sub><b>Yashas VM</b></sub>
+      </a>
+      <br />
+      <sub>Creator & Lead Developer</sub>
+    </td>
+  </tr>
+</table>
+
+---
 
 <p align="center">
   <b>Made by @Yashas.VM</b><br>
